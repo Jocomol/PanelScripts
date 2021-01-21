@@ -2,24 +2,40 @@
 
 import json
 import argparse
+import requests
 
-gradefile_path = "./example.json"
+parser = argparse.ArgumentParser(description='Reads corona-stats.online and prints out specified numbers.')
+parser.add_argument('-c', '--country', help='select country', type=str, default="", action="store")
+parser.add_argument('--cases', action='store_true', help="total cases")
+parser.add_argument('--casespermil', action='store_true', help="cases per one million")
+parser.add_argument('--todaycases', action='store_true', help="todays cases")
+parser.add_argument('--deaths', action='store_true', help="total deaths")
+parser.add_argument('--todaydeaths', action='store_true', help="todays deaths")
+parser.add_argument('--recovered', action='store_true', help="total recovered")
+parser.add_argument('--todayrecovered', action='store_true', help="todays recovered")
+parser.add_argument('--active', action='store_true', help="active cases")
+parser.add_argument('--critical', action='store_true', help="critical cases")
 
-with open(gradefile_path) as json_file:
-    data = json.load(json_file)
+args = parser.parse_args()
+data = json.loads(requests.get("https://corona-stats.online/" + args.country + "?format=json").content)
+
+if args.cases:
+    print("{:,}".format(data["data"][0]["cases"]))
+if args.casespermil:
+    print("{:,}".format(data["data"][0]["casesPerOneMillion"]))
+if args.todaycases:
+    print("{:,}".format(data["data"][0]["todayCases"]))
+if args.deaths:
+    print("{:,}".format(data["data"][0]["deaths"]))
+if args.todaydeaths:
+    print("{:,}".format(data["data"][0]["todayDeaths"]))
+if args.recovered:
+    print("{:,}".format(data["data"][0]["recovered"]))
+if args.todayrecovered:
+    print("{:,}".format(data["data"][0]["todayRecovered"]))
+if args.active:
+    print("{:,}".format(data["data"][0]["active"]))
+if args.critical:
+    print("{:,}".format(data["data"][0]["critical"]))
 
 
-crser = argparse.ArgumentParser(description='Script to add grades and to calculate grades')
-parser.add_argument('-a', '--add', help='adds grade', type=float, default=0.0, action="store")
-parser.add_argument('-c', '--course', help='specifies course', type=int, default=0, action="store")
-parser.add_argument("-l", '--list', help='lists all grades', action='store_true')
-parser.add_argument("-C", "--courses", help="list all courses", action='store_true')asesPerOneMillion = data["data"][0]["casesPerOneMillion"]
-
-cases = data["data"][0]["cases"]
-todayCases = data["data"][0]["todayCases"]
-deaths = data["data"][0]["deaths"]
-todayDeaths = data["data"][0]["todayDeaths"]
-recovered = data["data"][0]["recovered"]
-todayRecovered = data["data"][0]["todayRecovered"]
-active = data["data"][0]["active"]
-critical = data["data"][0]["critical"]
