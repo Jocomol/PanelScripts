@@ -30,7 +30,7 @@ if args.cases:
 if args.casespermil:
     print("{:,}".format(part["casesPerOneMillion"]))
 if args.todaycases:
-    print("{:,}".format(part["todaycases"]))
+    print("{:,}".format(part["todayCases"]))
 if args.deaths:
     print("{:,}".format(part["deaths"]))
 if args.todaydeaths:
