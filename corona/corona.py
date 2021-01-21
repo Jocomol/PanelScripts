@@ -19,29 +19,31 @@ parser.add_argument('--critical', action='store_true', help="critical cases")
 args = parser.parse_args()
 data = json.loads(requests.get("https://corona-stats.online/" + args.country + "?format=json").content)
 
+try:
+    if args.country != "":
+        part = data["data"][0]
+    else:
+        part = data["worldStats"]
 
-if args.country != "":
-    part = data["data"][0]
-else:
-    part = data["worldStats"]
+    if args.cases:
+        print("{:,}".format(part["cases"]))
+    if args.casespermil:
+        print("{:,}".format(part["casesPerOneMillion"]))
+    if args.todaycases:
+        print("{:,}".format(part["todayCases"]))
+    if args.deaths:
+        print("{:,}".format(part["deaths"]))
+    if args.todaydeaths:
+        print("{:,}".format(part["todayDeaths"]))
+    if args.recovered:
+        print("{:,}".format(part["recovered"]))
+    if args.todayrecovered:
+        print("{:,}".format(part["todayRecovered"]))
+    if args.active:
+        print("{:,}".format(part["active"]))
+    if args.critical:
+        print("{:,}".format(part["critical"]))
 
-if args.cases:
-    print("{:,}".format(part["cases"]))
-if args.casespermil:
-    print("{:,}".format(part["casesPerOneMillion"]))
-if args.todaycases:
-    print("{:,}".format(part["todayCases"]))
-if args.deaths:
-    print("{:,}".format(part["deaths"]))
-if args.todaydeaths:
-    print("{:,}".format(part["todayDeaths"]))
-if args.recovered:
-    print("{:,}".format(part["recovered"]))
-if args.todayrecovered:
-    print("{:,}".format(part["todayRecovered"]))
-if args.active:
-    print("{:,}".format(part["active"]))
-if args.critical:
-    print("{:,}".format(part["critical"]))
-
+except Exception:
+    pass
 
