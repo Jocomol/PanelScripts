@@ -17,9 +17,9 @@ parser.add_argument('--active', action='store_true', help="active cases")
 parser.add_argument('--critical', action='store_true', help="critical cases")
 
 args = parser.parse_args()
-data = json.loads(requests.get("https://corona-stats.online/" + args.country + "?format=json").content)
 
 try:
+    data = json.loads(requests.get("https://corona-stats.online/" + args.country + "?format=json").content)
     if args.country != "":
         part = data["data"][0]
     else:
